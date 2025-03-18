@@ -18,12 +18,16 @@ jobs:
     environment: Production
     steps:
       - name: Baixar Release do GitHub
-        id: latest_release
-        uses: michalosman/get-latest-release@v1.2.0
+#        id: latest_release
+#        uses: michalosman/get-latest-release@v1.2.0
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          repo_owner: ${{ github.repository_owner }}
+#          repo_name: ${{ github.event.repository.name }}
+        uses: thebritican/fetch-latest-release@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          repo_owner: ${{ github.repository_owner }}
-          repo_name: ${{ github.event.repository.name }}
+
 
       - name: Descompactar a Release
         run: |
