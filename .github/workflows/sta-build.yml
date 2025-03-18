@@ -5,6 +5,8 @@ on:
       node-version:
         required: true
         type: string
+    secrets:
+      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
 
 jobs:
   build:
