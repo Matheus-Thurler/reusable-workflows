@@ -32,22 +32,11 @@ jobs:
 #          npm i
 #          npm run generate
 
-      - name: Upload de artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: nuxt-build
-          path: dist/
 
   deploy-release-github:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar o artefato
-        uses: actions/download-artifact@v4
-        with:
-          name: nuxt-build
-          path: dist/
-
       - name: Criar Release no GitHub
         uses: softprops/action-gh-release@v1
         with:
