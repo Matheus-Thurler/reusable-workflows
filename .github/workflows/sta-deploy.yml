@@ -21,11 +21,10 @@ jobs:
         uses: dsaltares/fetch-gh-release-asset@master
         with:
           repo: ${{ github.repository }}
-          version: v1.${{ github.run_number }}
+          version: tags/v1.${{ github.run_number }}
           file: '*.zip'
           target: release-downloads/
           token: ${{ secrets.TOKEN_GITHUB }}
-          fail_if_no_asset: true
 
       - name: Descompactar a Release
         run: |
