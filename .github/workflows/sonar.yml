@@ -1,0 +1,31 @@
+name: sonar.yml
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+
+jobs:
+  sonar-scanner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Instalar dependências
+        run: |
+          cd .github/workflows/sonar-linter
+          npm i
+          npm run build
+
+      - name: Executar Linter e Quality Gate
+        uses: ./.github/workflows/sonar-linter
+        with:
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          sonar-organization: ${{ secrets.SONAR_ORGANIZATION }}
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}

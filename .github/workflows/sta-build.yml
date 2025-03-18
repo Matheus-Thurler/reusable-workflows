@@ -1,0 +1,60 @@
+name: sta-build.yml
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+    steps:
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - uses: actions/checkout@v2
+
+      - name: Teste Unitario
+        run: |
+          npm i
+          npm run test
+
+      - name: Instalando dependencias & Gerando o codigo
+        run: |
+          npm i
+          npm run generate
+
+      - name: Upload de artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuxt-build
+          path: dist/
+
+  deploy-release-github:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o artefato
+        uses: actions/download-artifact@v4
+        with:
+          name: nuxt-build
+          path: dist/
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.${{ github.run_number }}
+          name: "Release v1.${{ github.run_number }}"
+          body: "New Version."
+          draft: false
+          prerelease: false
+          files: dist/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}

@@ -1,0 +1,48 @@
+name: sta-deploy.yml
+on:
+  workflow_call:
+    inputs:
+      AWS_ACCESS_KEY:
+        required: true
+      AWS_SECRET_KEY:
+        required: true
+      AWS_REGION:
+        required: true
+      AWS_S3_BUCKET_NAME:
+        required: true
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - name: Baixar Release do GitHub
+        uses: dsaltares/fetch-gh-release-asset@v1.0.0
+        with:
+          repo: ${{ github.repository }}
+          version: tags/v1.${{ github.run_number }}
+          file: '*.zip'
+          target: release-downloads/
+          token: ${{ secrets.TOKEN_GITHUB }}
+          fail_if_no_asset: true
+
+      - name: Descompactar a Release
+        run: |
+          mv *.zip dist.zip
+          unzip dist.zip
+
+      - name: Listar Arquivos Extraídos
+        run: |
+          echo "Arquivos extraídos:"
+          ls -lR dist/  
+
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ inputs.AWS_SECRET_KEY }}
+          aws-region: ${{ inputs.AWS_REGION }}
+
+      - name: Copy files to the S3 website content bucket
+        run: aws s3 sync dist/ s3://${{ inputs.AWS_S3_BUCKET_NAME }} --acl public-read
