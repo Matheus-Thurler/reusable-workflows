@@ -1,19 +1,6 @@
 name: sta-deploy.yml
 on:
   workflow_call:
-    inputs:
-      AWS_ACCESS_KEY:
-        required: true
-        type: string
-      AWS_SECRET_KEY:
-        required: true
-        type: string
-      AWS_REGION:
-        required: true
-        type: string
-      AWS_S3_BUCKET_NAME:
-        type: string
-
 jobs:
   Deploy:
     runs-on: ubuntu-latest
