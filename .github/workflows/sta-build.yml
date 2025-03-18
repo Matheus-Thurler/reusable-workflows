@@ -4,6 +4,7 @@ on:
     inputs:
       node-version:
         required: true
+        type: boolean
 
 jobs:
   build:
