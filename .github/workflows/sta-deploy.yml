@@ -17,27 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
     steps:
-      - name: Baixar Release do GitHub
-#        id: latest_release
-#        uses: michalosman/get-latest-release@v1.2.0
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          repo_owner: ${{ github.repository_owner }}
-#          repo_name: ${{ github.event.repository.name }}
-        uses: thebritican/fetch-latest-release@v1
+      - name: Baixar o artefato
+        uses: actions/download-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-
-      - name: Descompactar a Release
-        run: |
-          mv *.zip dist.zip
-          unzip dist.zip
-
-      - name: Listar Arquivos Extraídos
-        run: |
-          echo "Arquivos extraídos:"
-          ls -lR dist/  
+          name: nuxt-build
+          path: dist/
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
