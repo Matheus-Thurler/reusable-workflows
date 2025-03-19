@@ -62,7 +62,7 @@ jobs:
           path: dist/
 
   deploy-release-github:
-    needs: build
+    needs: build-generate
     runs-on: ubuntu-latest
     steps:
       - name: Baixar o artefato
