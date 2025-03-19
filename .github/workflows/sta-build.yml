@@ -48,6 +48,7 @@ jobs:
     needs: Sonar
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Instalando dependencias & Gerando o codigo
         run: |
           ls -lah
