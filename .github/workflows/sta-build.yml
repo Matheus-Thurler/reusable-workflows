@@ -35,13 +35,14 @@ jobs:
           npm i
           npm run test
 
-      - name : Teste de qualidade Sonar
-        uses: ./.github/workflows/sonar.yml
+      - name : Teste de qualidade Sona
+        uses: Matheus-Thurler/teste-nttdata-template/.github/workflows/sonar.yml@master
         with:
           node-version: ${{ vars.node_version }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+
 
       - name: Instalando dependencias & Gerando o codigo
         run: |
