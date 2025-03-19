@@ -13,7 +13,27 @@ on:
       TOKEN_GITHUB:
         required: true
 jobs:
-  Deploy:
+  deploy-release-github:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o artefato
+        uses: actions/download-artifact@v4
+        with:
+          name: nuxt-build
+          path: dist/
+
+      - name: Criar Release no GitHub
+        uses: actions/create-release@v1
+        with:
+          tag_name: v1.${{ github.run_number }}
+          release_name: "Release v1.${{ github.run_number }}"
+          body: "New Version."
+          draft: false
+          prerelease: false
+          files: dist/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+  Deploy to Production:
     runs-on: ubuntu-latest
     environment: Production
     steps:
