@@ -14,7 +14,6 @@ on:
         required: true
 jobs:
   deploy-release-github:
-    environment: Production
     runs-on: ubuntu-latest
     steps:
       - name: Baixar o artefato
