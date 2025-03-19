@@ -25,6 +25,11 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
 
+      - name: Teste
+        run: |
+          npm i
+          vitest run --coverage 
+
       - name: Instalar dependências
         run: |
           cd .github/workflows/sonar
