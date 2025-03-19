@@ -15,7 +15,7 @@ on:
       SONAR_PROJECT_KEY:
         required: true
 jobs:
-  build:
+  TesteUnitario:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -28,14 +28,14 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Teste Unitario
         run: |
           npm i
           npm run test
   Sonar:
-    needs: build
+    needs: TesteUnitario
     uses: Matheus-Thurler/teste-nttdata-template/.github/workflows/sonar.yml@master
     with:
       node-version: ${{ vars.node_version }}
