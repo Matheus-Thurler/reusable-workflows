@@ -51,7 +51,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Instalando dependencias & Gerando o codigo
         run: |
-          ls -lah
           npm i
           npm run generate
 
