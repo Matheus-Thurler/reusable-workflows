@@ -33,7 +33,7 @@ jobs:
           files: dist/**
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-  Deploy to Production:
+  Deploy_to_Production:
     runs-on: ubuntu-latest
     environment: Production
     steps:
