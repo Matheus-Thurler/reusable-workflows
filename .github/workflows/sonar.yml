@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
 
-      - name: Teste
+      - name: Test Coverage Report
         run: |
           npm i
           npx vitest --coverage
