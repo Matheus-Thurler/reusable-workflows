@@ -50,6 +50,7 @@ jobs:
     steps:
       - name: Instalando dependencias & Gerando o codigo
         run: |
+          npm i
           npm run generate
 
       - name: Upload de artifact
