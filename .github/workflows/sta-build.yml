@@ -45,11 +45,12 @@ jobs:
       SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
 
   build-generate:
-    needs: build
+    needs: Sonar
     runs-on: ubuntu-latest
     steps:
       - name: Instalando dependencias & Gerando o codigo
         run: |
+          ls -lah
           npm i
           npm run generate
 
