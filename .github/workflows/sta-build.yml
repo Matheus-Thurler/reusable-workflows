@@ -36,7 +36,7 @@ jobs:
           npm run test
   Sonar:
     needs: TesteUnitario
-    uses: Matheus-Thurler/teste-nttdata-template/.github/workflows/sonar.yml@master
+    uses: Matheus-Thurler/reusable-workflows/.github/workflows/sonar.yml@master
     with:
       node-version: ${{ vars.node_version }}
     secrets:
