@@ -35,7 +35,7 @@ jobs:
       #     npm i
       #     npm run test
 
-      - name: Create .en
+      - name: Create .env
         run: |
           echo "NUXT_PRIVATE_RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env
   # Sonar:
@@ -49,7 +49,6 @@ jobs:
   #     SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
 
   build-generate:
-    needs: Sonar
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
