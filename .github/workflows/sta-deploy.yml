@@ -10,8 +10,8 @@ on:
         required: true
       AWS_S3_BUCKET_NAME:
         required: true
-      TOKEN_GITHUB:
-        required: true
+      # TOKEN_GITHUB:
+      #   required: true
 jobs:
   deploy-release-github:
     runs-on: ubuntu-latest
