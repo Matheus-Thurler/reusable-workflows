@@ -5,9 +5,9 @@ on:
       node-version:
         required: true
         type: string
-    secrets:
-      TOKEN_GITHUB:
-        required: true
+    # secrets:
+    #   TOKEN_GITHUB:
+    #     required: true
       # SONAR_TOKEN:
       #   required: true
       # SONAR_ORGANIZATION:
