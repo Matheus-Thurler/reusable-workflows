@@ -31,28 +31,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          echo "--- INICIANDO MODO DE DEPURAÇÃO ---"
-          echo "Dono do Repositório (github.repository_owner): ${{ github.repository_owner }}"
-          echo "Nome do Repositório para Verificar (inputs.repository_name): ${{ inputs.repository_name }}"
-          echo "-------------------------------------"
-          echo "Executando 'gh repo view' com saída de erro visível..."
-          
-          # Executamos o comando e deixamos qualquer erro ser impresso no log
-          gh repo view ${{ github.repository_owner }}/${{ inputs.repository_name }}
-          
-          # Imediatamente após, capturamos o código de saída do comando 'gh'
-          EXIT_CODE=$?
-          
-          echo "-------------------------------------"
-          echo "Comando 'gh repo view' concluído."
-          echo "O CÓDIGO DE SAÍDA (Exit Code) FOI: $EXIT_CODE"
-          echo "-------------------------------------"
-          
-          if [ $EXIT_CODE -eq 0 ]; then
-            echo "DIAGNÓSTICO: O comando foi BEM-SUCEDIDO (código 0). O repositório FOI encontrado."
+          # Lógica final: se encontrar, falha; se não encontrar, passa.
+          if gh repo view ${{ github.repository_owner }}/${{ inputs.repository_name }} &>/dev/null; then
+            echo "❌ Repositório '${{ inputs.repository_name }}' já existe."
+            exit 1 
           else
-            echo "DIAGNÓSTICO: O comando FALHOU (código $EXIT_CODE). O repositório NÃO foi encontrado ou houve um erro de permissão/autenticação."
+            echo "✔️ Nome de repositório '${{ inputs.repository_name }}' está disponível."
           fi
-          
-          echo "--- Forçando a falha para análise de logs ---"
-          exit 1
