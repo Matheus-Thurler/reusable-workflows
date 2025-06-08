@@ -7,7 +7,7 @@ on:
         type: string
         description: "project language type"
       architecture:
-        required: false
+        required: true
         type: string
         description: "project architecture type"
       repository_name:
@@ -28,6 +28,7 @@ jobs:
         env:
           GITHIB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo ${{ inputs.architecture }}
           # Tentamos visualizar o repositório. A CLI 'gh' retorna um erro (exit code != 0) se não encontrar.
           # A sintaxe 'if gh ...' verifica o código de saída do comando.
           # O '&>/dev/null' suprime a saída de erro padrão para manter o log limpo.
