@@ -1,0 +1,50 @@
+name: create-repository.yml
+on:
+  workflow_call:
+    inputs:
+      language:
+        required: true
+        type: choice
+        options:
+          - node
+          - python
+        description: "project language type"
+      architecture:
+        required: true
+        type: choice
+        options:
+          - srv
+          - sta
+        description: "project architecture type"
+      repository_name:
+        required: true
+        description: "repository name"
+        type: string
+
+jobs:
+  Validate-Repository-name:
+    name: "1. Validar nome do repositorio"
+    runs-on: ubuntu-latest
+    outputs:
+      exists: ${{ steps.check_repo.outputs.exists }}
+
+    steps:
+      - name: Verificar se o repositório já existe
+        id: check_repo
+        env:
+          GITHIB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Tentamos visualizar o repositório. A CLI 'gh' retorna um erro (exit code != 0) se não encontrar.
+          # A sintaxe 'if gh ...' verifica o código de saída do comando.
+          # O '&>/dev/null' suprime a saída de erro padrão para manter o log limpo.
+          
+          if gh repo view ${{ github.repository_owner }}/${{ inputs.repository_name }} &>/dev/null; then
+            # Se o comando for bem-sucedido, o repositório existe.
+            echo "❌ Repositório '${{ inputs.repository_name }}' já existe."
+            echo "exists=true" >> $GITHUB_OUTPUT
+            exit 1 # Falha o workflow propositalmente
+          else
+            # Se o comando falhar, o repositório não existe.
+            echo "✔️ Nome de repositório '${{ inputs.repository_name }}' está disponível."
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
