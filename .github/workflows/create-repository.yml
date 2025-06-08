@@ -14,6 +14,9 @@ on:
         required: true
         type: string
         description: "repository name"
+    secrets:
+      GH_TOKEN:
+        required: true
 
 jobs:
   Validate-Repository-name:
