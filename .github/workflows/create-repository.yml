@@ -29,7 +29,7 @@ jobs:
       - name: Verificar se o repositório já existe
         id: check_repo
         env:
-          GITHIB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           echo "--- INICIANDO MODO DE DEPURAÇÃO ---"
           echo "Dono do Repositório (github.repository_owner): ${{ github.repository_owner }}"
