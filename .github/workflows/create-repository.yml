@@ -26,7 +26,7 @@ jobs:
       - name: Verificar se o repositório já existe
         id: check_repo
         env:
-          GITHIB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHIB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           echo ${{ inputs.architecture }}
           # Tentamos visualizar o repositório. A CLI 'gh' retorna um erro (exit code != 0) se não encontrar.
